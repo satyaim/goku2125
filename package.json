@@ -1,0 +1,24 @@
+{
+  "name": "goku2125",
+  "version": "1.0.0",
+  "description": "Telegram Bot",
+  "main": "app.js",
+  "scripts": {
+    "pretest": "eslint --ignore-path .gitignore .",
+    "fix": "eslint --fix .gitignore .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "satya",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.16.4",
+    "node-telegram-bot-api": "^0.30.0",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2"
+  },
+  "devDependencies": {
+    "eslint": "^5.11.1",
+    "eslint-config-strongloop": "^2.1.0"
+  }
+}
