@@ -44,11 +44,12 @@ bot.onText(/\/start/, (msg, match) => {
 bot.onText(/\/song/, (msg, match) => {
   const chatId = msg.chat.id;
   const songName = msg.text.substring(6).replace(/ /g,'+');
+  //Example : //bot.sendPhoto( msg.chat.id, 'https://upload.wikimedia.org/wikipedia/en/thumb/8/80/Wikipedia-logo-v2.svg/1122px-Wikipedia-logo-v2.svg.png', {caption : 'caption'})
   if(!songName){
     bot.sendMessage(chatId, 'Example : /song I See Fire');
     return;
   }
-  const searchURL = 'https://databrainz.com/api/search_api.cgi?jsoncallback=jQuery111107201529123778425_1545983902766&format=json&qry='+songName
+  const searchURL = keys.songSearchURL+songName
 
   console.log(match)
 
@@ -57,11 +58,25 @@ bot.onText(/\/song/, (msg, match) => {
       console.log(searchURL);
       const result = JSON.parse(html.substring(html.indexOf('(')+1, html.length-1));
       console.log(result)
-      const songURL = 'https://www.musicpleeer.com/#!'+result.results[0].url;
-        rp({uri : songURL, json : true, headers: { 'User-Agent': ra.getRandomData() }, resolveWithFullResponse: true})
+      const songURL = keys.songSongURL+result.results[0].url;
+        rp({uri : songURL, json : true, headers: { 'User-Agent': ra.getRandomData() }})
           .then(function(html){
-            console.log(Object.keys(html))
-            console.log(html.request._qs)
+            if(songObj = JSON.parse(html.substring(html.indexOf('(')+1, html.length-1))){
+              console.log(songObj.song)
+              const { returncode,returnmsg,title,artist,album,size,url,time,date,source,active,albumart,speed,counter } = songObj.song
+              console.log(albumart)
+              bot.sendAudio( chatId, url, {
+                  caption : date, 
+                  thumb : albumart,
+                  performer : artist,
+                  title : title
+                }, 
+                function(err, res){
+                  console.log(err)
+                  console.log(res)
+                }
+              )
+            }
           })
           .catch(function(err){
             console.log(Object.keys(err))

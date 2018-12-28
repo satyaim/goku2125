@@ -1,6 +1,6 @@
-# GOKU2125 BOT
+## Goku2125 Bot
 
-## Currently : A Telegram BOT, with few features.
+### Currently : A Telegram BOT, with few features.
 
 ### Features include:
 
