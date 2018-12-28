@@ -58,32 +58,95 @@ bot.onText(/\/song/, (msg, match) => {
       console.log(searchURL);
       const result = JSON.parse(html.substring(html.indexOf('(')+1, html.length-1));
       console.log(result)
-      const songURL = keys.songSongURL+result.results[0].url;
-        rp({uri : songURL, json : true, headers: { 'User-Agent': ra.getRandomData() }})
-          .then(function(html){
-            if(songObj = JSON.parse(html.substring(html.indexOf('(')+1, html.length-1))){
-              console.log(songObj.song)
-              const { returncode,returnmsg,title,artist,album,size,url,time,date,source,active,albumart,speed,counter } = songObj.song
-              console.log(albumart)
-              bot.sendAudio( chatId, url, {
-                  caption : date, 
-                  thumb : albumart,
-                  performer : artist,
-                  title : title
-                }, 
-                function(err, res){
-                  console.log(err)
-                  console.log(res)
+      // Populate Reply With Songs as options
+      let reply = 'Select Song to Download\n\n';
+      const length = result.results.length;
+      if(length==0) {
+        bot.sendMessage(chatId, 'No Song Found For Your Query');
+        return;
+      }
+      console.log(length)
+      let iter = 0;
+      while(iter<length){
+        const artistString = result.results[iter].artist? 'Artist: ' + result.results[iter].artist + '\n' : '';
+        reply += ( (iter+1).toString() + '. ' + result.results[iter].title + '\n' + artistString + result.results[iter].description + '\n\n');
+        iter += 1;
+        console.log(reply)
+      }
+      // Populate Custom Keyboard
+      iter=0;
+      let keyboard = [];
+      const size = parseInt(Math.sqrt(length));
+      console.log('size'+size)
+      let rowboard, col
+      while(iter<size){
+        rowboard = [];
+        col =0 ;
+        while(col<size){
+          rowboard[col] = (iter*size+col+1).toString();
+          col++;
+        }
+        keyboard.push(rowboard);
+        iter++;
+      }
+      rowboard= [];
+      iter = size*size+1;
+      while(iter<=length){
+        rowboard[iter-size*size-1]= iter.toString();
+        iter++;
+      }
+      keyboard.push(rowboard);
+      console.log(keyboard)
+      // Send fetched Data
+      bot.sendMessage(chatId, reply,
+        { reply_markup : 
+          { 'keyboard': keyboard,
+            'resize_keyboard' : true,
+            'one_time_keyboard': true,
+            'force_reply': true 
+          }
+        } 
+      )
+        .then(function(sent){
+          bot.once('message', function(response){
+            console.log(sent)
+            const choice = parseInt(response.text);
+            const songURL = keys.songSongURL+result.results[choice-1].url;
+            rp({uri : songURL, json : true, headers: { 'User-Agent': ra.getRandomData() }})
+              .then(function(html){
+                if(JSON.parse(html.substring(html.indexOf('(')+1, html.length-1))){
+                  const songObj = JSON.parse(html.substring(html.indexOf('(')+1, html.length-1))
+                  console.log(songObj.song)
+                  const { title,artist,album,url,date,albumart } = songObj.song
+                  console.log(albumart)
+                  bot.sendAudio( chatId, url, {
+                    caption : album+', '+date, 
+                    thumb : albumart,
+                    performer : artist,
+                    title : title
+                  }, 
+                  function(err, res){
+                    console.log(err)
+                    console.log(res)
+                    bot.sendMessage(chatId, 'Sorry! Error Occured');
+                  }
+                  )
                 }
-              )
-            }
+              })
+              .catch(function(err){
+                console.log(Object.keys(err))
+                bot.sendMessage(chatId, 'Sorry! Error Occured');
+              });
           })
-          .catch(function(err){
-            console.log(Object.keys(err))
-          });
+        })
+        .catch(function(err){
+          console.log(err)
+          bot.sendMessage(chatId, 'Sorry! Error Occured');
+        })
     })
     .catch(function(err){
       console.log(Object.keys(err))
+      bot.sendMessage(chatId, 'Sorry! Error Occured');
       //console.log(err.response)
       //handle error
     });

@@ -8,7 +8,7 @@ Chat With Bot:
 
 1. `/start` : Trivial
 2. `/vs aus ind` : Scrapes for current match results
-3. `/cri` : Scrapes live/recent cricket matches and allows user to find live scores
+3. `/livecri` : Scrapes live/recent cricket matches and allows user to find live scores
 4. `/song i see fire` : Currenlty in progress
 
 Inline Bot (While in Chat with other Users):
