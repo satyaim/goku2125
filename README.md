@@ -1,8 +1,8 @@
-###GOKU2125 BOT
+GOKU2125 BOT
 
-##Currently : A Telegram BOT, with few features.
+Currently : A Telegram BOT, with few features.
 
-#Features include:
+Features include:
 
 Chat With Bot:
 
