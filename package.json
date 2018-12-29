@@ -4,7 +4,6 @@
   "description": "Telegram Bot",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
     "pretest": "eslint --ignore-path .gitignore .",
     "fix": "eslint --fix .gitignore .",
     "test": "echo \"Error: no test specified\" && exit 1"
