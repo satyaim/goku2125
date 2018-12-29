@@ -2,7 +2,6 @@
   "name": "goku2125",
   "version": "1.0.0",
   "description": "Telegram Bot",
-  "main": "app.js",
   "scripts": {
     "pretest": "eslint --ignore-path .gitignore .",
     "fix": "eslint --fix .gitignore .",
