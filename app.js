@@ -126,27 +126,25 @@ bot.onText(/\/song/, (msg, match) => {
                     title : title
                   }, 
                   function(err, res){
-                    console.log(err);
-                    console.log(res);
-                    bot.sendMessage(chatId, 'Sorry! Error Occured');
+                    bot.sendMessage(chatId, 'Sorry! Error Occured 100');
                   }
                   );
                 }
               })
               .catch(function(err){
                 console.log(Object.keys(err));
-                bot.sendMessage(chatId, 'Sorry! Error Occured');
+                bot.sendMessage(chatId, 'Sorry! Error Occured 101');
               });
           });
         })
         .catch(function(err){
           console.log(err);
-          bot.sendMessage(chatId, 'Sorry! Error Occured');
+          bot.sendMessage(chatId, 'Sorry! Error Occured 102');
         });
     })
     .catch(function(err){
       console.log(Object.keys(err));
-      bot.sendMessage(chatId, 'Sorry! Error Occured');
+      bot.sendMessage(chatId, 'Sorry! Error Occured 103');
       //console.log(err.response)
       //handle error
     });
