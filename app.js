@@ -143,7 +143,7 @@ bot.onText(/\/song/, (msg, match) => {
         });
     })
     .catch(function(err){
-      console.log(Object.keys(err));
+      console.log(err);
       bot.sendMessage(chatId, 'Sorry! Error Occured 103');
       //console.log(err.response)
       //handle error
