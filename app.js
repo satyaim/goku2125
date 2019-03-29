@@ -173,7 +173,7 @@ bot.onText(/\/vs/, (msg, match) => {
       reply = reply.split(' results   ')[2].split('hours ago')[0].split('All times are in')[0].substring(0,300);
       console.log(reply);
       if(!reply)
-        reply= 'Sorry! Coundn\'t find result.';
+        reply= 'Coundn\'t find result. Sorry';
       bot.sendMessage(chatId, reply); 
     })
     .catch(function(err){
