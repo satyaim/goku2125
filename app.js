@@ -255,7 +255,7 @@ bot.onText(/\/livecri/, (msg, match) => {
     })
     .catch(function(err){
       console.error(err);
-      const reply= 'Sorry! Coundn\'t find result.';
+      const reply= 'Coundn\'t find result. Sorry! ';
       bot.sendMessage(chatId, reply);
     });
 
